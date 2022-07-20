@@ -11,6 +11,9 @@ const moviesReducer = (state = [], action) => {
     if (action.type === 'CREATE_MOVIE'){
         return [...state, action.movie];
     }
+    if (action.type === 'DELETE_MOVIE'){
+        return state.filter( movie => movie.id !== action.movie.id );
+    }
     return state;
 };
 
@@ -30,6 +33,13 @@ export const createMovie = () => {
         const movie = (await axios.post('/api/movies')).data;
         dispatch({ type: 'CREATE_MOVIE', movie });
         // history.push("/movies");
+    }
+};
+
+export const deleteMovie = (movie) => {
+    return async(dispatch) => {
+        await axios.delete(`/api/movies/${movie.id}`);
+        dispatch({ type: 'DELETE_MOVIE', movie });
     }
 };
 
