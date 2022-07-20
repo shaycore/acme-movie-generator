@@ -4,7 +4,7 @@ const path = require('path');
 const db = require('./db');
 const Movie = require('./db/Movie');
 
-
+app.use(express.json());
 
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 

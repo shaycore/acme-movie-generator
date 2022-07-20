@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteMovie  } from '../store';
+import { deleteMovie, updateMovie  } from '../store';
 
 
-const Movies = ({ movies, deleteMovie }) => {
+const Movies = ({ movies, deleteMovie, updateMovie }) => {
     return (
         <div>
             <ul>
@@ -14,9 +14,10 @@ const Movies = ({ movies, deleteMovie }) => {
                             <Link to={`/movies/${movie.id}`}>
                                 { movie.name.toLowerCase() }
                             </Link>
+                            ({ movie.stars })
                             <button onClick={ () => deleteMovie(movie) }>X</button>
-                            <button onClick={()=>{console.log('hi')}}>+</button>
-                            <button onClick={()=>{console.log('hi')}}>-</button>
+                            <button onClick={ ()=> updateMovie(movie, 1) }>+</button>
+                            <button onClick={ ()=> updateMovie(movie, -1) }>-</button>
 
                         </li>
                     );
@@ -34,7 +35,12 @@ const mapDispatchToProps = (dispatch) => {
     return {
         deleteMovie: (movie) => {
             dispatch(deleteMovie(movie))
+        },
+        updateMovie: (movie, val) => {
+            movie = { ...movie, stars: movie.stars + val }
+            dispatch(updateMovie(movie))
         }
+        
     }
 };
 

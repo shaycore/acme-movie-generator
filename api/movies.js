@@ -35,7 +35,8 @@ router.delete('/:id', async(req,res,next) => {
 router.put('/:id', async(req,res,next) => {
     try {
         const movie = await Movie.findByPk(req.params.id);
-        res.send(await movie.update(req.body));
+        await movie.update(req.body);
+        res.status(201).send(movie);
     } catch(err) {
         next(err);
     }

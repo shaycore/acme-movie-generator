@@ -14,6 +14,9 @@ const moviesReducer = (state = [], action) => {
     if (action.type === 'DELETE_MOVIE'){
         return state.filter( movie => movie.id !== action.movie.id );
     }
+    if (action.type === 'UPDATE_MOVIE') {
+        return state.map(movie => movie.id === action.movie.id ? action.movie : movie );
+    }
     return state;
 };
 
@@ -40,6 +43,15 @@ export const deleteMovie = (movie) => {
     return async(dispatch) => {
         await axios.delete(`/api/movies/${movie.id}`);
         dispatch({ type: 'DELETE_MOVIE', movie });
+    }
+};
+
+export const updateMovie = (movie) => {
+    return async(dispatch) => {
+        console.log(movie);
+        movie = (await axios.put(`/api/movies/${movie.id}`, movie)).data;
+        console.log(movie);
+        dispatch({ type: 'UPDATE_MOVIE', movie });
     }
 };
 
