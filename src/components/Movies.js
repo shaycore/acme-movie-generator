@@ -9,7 +9,9 @@ const Movies = ({ movies }) => {
                 { movies.map((movie)=> {
                     return (
                         <li key={ movie.id }>
-                            { movie.name.toLowerCase() }
+                            <Link to={`/movies/${movie.id}`}>
+                                { movie.name.toLowerCase() }
+                            </Link>
                         </li>
                     );
                 })}
