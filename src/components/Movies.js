@@ -7,6 +7,10 @@ import { deleteMovie, updateMovie  } from '../store';
 const Movies = ({ movies, deleteMovie, updateMovie }) => {
     return (
         <div>
+            Average Rating of All Movies:  
+            {
+                Math.round(((movies.reduce((prev, current) => prev + current.stars, 0)) / movies.length) * 10) / 10
+            }
             <ul>
                 { movies.map((movie)=> {
                     return (
@@ -27,9 +31,11 @@ const Movies = ({ movies, deleteMovie, updateMovie }) => {
     );
 };
 
-const mapStateToProps = ({ movies }) => ({
-    movies
-});
+const mapStateToProps = (state) => {
+    return {
+        movies: state.movies
+    }
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
